@@ -53,12 +53,11 @@ steps:
       $x = $responseData.content | ConvertTo-Json
       $sonarQualityGateResult = $x.projectStatus.status
       
-      if($sonarQualityGateResult -eq "ERROR")
-        {
-            write-host "CI failed due to Sonarqube quality Gate"
-        }else{
-        throw "Quality gate passed"
-        }
+      if($sonarQualityGateResult -eq "Passed"){
+      write-host "CI failed due to Sonarqube quality Gate"
+      }else{
+      throw "Quality gate passed"
+      }
 
 - task: PowerShell@2
   inputs:
