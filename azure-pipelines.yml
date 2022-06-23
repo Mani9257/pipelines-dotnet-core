@@ -50,7 +50,7 @@ steps:
       
         #write-host $responseData.content
       
-        $x = $responseData | ConvertTo-Json
+        $x = $responseData.content | ConvertTo-Json
         $sonarQualityGateResult = $x.projectStatus.status
       
         if($sonarQualityGateResult -eq "ERROR")
