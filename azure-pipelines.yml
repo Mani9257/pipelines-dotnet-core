@@ -11,6 +11,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  SonarToken: '554831c2d756d3aae0d1b3a09d634917d1aec8d5'
 
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
