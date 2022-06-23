@@ -22,3 +22,10 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'java-project_java-project'
     projectName: 'java-project'
+
+- task: SonarQubeAnalyze@5
+
+
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'
