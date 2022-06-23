@@ -33,6 +33,7 @@ steps:
   inputs:
     pollingTimeoutSec: '300'
 - task: PowerShell@2
+  displayName: QGcheck-with-UP
   inputs:
     targetType: 'inline'
     script: |
@@ -57,6 +58,8 @@ steps:
           {
               write-host "CI failed due to Sonarqube quality Gate"
               exit 1
+          }else{
+          throw "Quality gate passed"
           }
 
 - task: PowerShell@2
