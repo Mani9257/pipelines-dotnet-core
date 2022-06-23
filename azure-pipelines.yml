@@ -56,8 +56,8 @@ steps:
       $responseData = Invoke-WebRequest -Uri http://35.170.71.8:9000/api/project_badges/quality_gate?project=java-project_java-project -Method Get -Headers $headers -UseBasicParsing
       $x = $responseData.content | ConvertTo-Json | write-host
       
-      if($x.Contains("SONARQUBE QUALITY GATE FAIL")){
-      #if($x.result -contains 'SONARQUBE QUALITY GATE FAIL'){
+      #if($x.Contains("SONARQUBE QUALITY GATE FAIL")){
+      if($x.result -contains '<-- SONARQUBE QUALITY GATE FAIL -->'){
       write-host "CI failed due to Sonarqube quality Gate"
       }
       else
