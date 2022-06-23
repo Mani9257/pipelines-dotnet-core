@@ -54,21 +54,18 @@ steps:
       
       # Step 4. Make the GET request
       $responseData = Invoke-WebRequest -Uri http://35.170.71.8:9000/api/project_badges/quality_gate?project=java-project_java-project -Method Get -Headers $headers -UseBasicParsing
-      
-      write-host $responseData.content
-      
       $x = $responseData.content | ConvertTo-Json | write-host
-      $sonarQualityGateResult = $x.projectStatus.status
-      write-host "$sonarQualityGateResult value " + $sonarQualityGateResult
       
-      if($sonarQualityGateResult.status -eq "SONARQUBE QUALITY GATE FAIL"){
+      $sonarQualityGateResult = $x.projectStatus.status
+
+      write-host " sonarQualityGateResult value " + $sonarQualityGateResult
+      
+      if($sonarQualityGateResult -eq 'SONARQUBE QUALITY GATE FAIL'){
       write-host "CI failed due to Sonarqube quality Gate"
-      #errorActionPreference: 'stop'
       }
       else
       {
         write-host "CI success"
-        #errorActionPreference: 'continue'
       }
     
 
