@@ -81,7 +81,8 @@ steps:
       $basicAuth = [string]::Format("Basic {0}", $base64)
       $headers = @{ Authorization = $basicAuth }
       Write-Host $headers
-      $result = Invoke-RestMethod -Method Get -Uri http://35.170.71.8:9000/api/project_badges/quality_gate?projectKey=java-project_java-project -Headers $headers -UseBasicParsing
+      $result = Invoke-RestMethod -Method Get -Uri http://35.170.71.8:9000/dashboard?id=java-project_java-project -Headers $headers -UseBasicParsing
+     
       Write-Host $result
 
       $result | ConvertTo-Json | Write-Host
