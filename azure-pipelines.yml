@@ -50,6 +50,7 @@ steps:
       }else{
       throw "Quality gate failed"
       }
+    errorActionPreference: 'continue'
 
 - task: PowerShell@2
   inputs:
