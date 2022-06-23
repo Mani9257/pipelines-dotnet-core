@@ -16,9 +16,9 @@ variables:
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
-#- task: PowerShell@2
- # inputs:
-  #  filePath: '$(System.DefaultWorkingDirectory)\*\get-sonarqube-quality-gate-status.ps1'
+- task: PowerShell@2
+  inputs:
+    filePath: 'D:\a\1\s\get-sonarqube-quality-gate-status.ps1'
 
 - task: SonarQubePrepare@5
   inputs:
@@ -67,7 +67,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      $token = [System.Text.Encoding]::UTF8.GetBytes($env:SonarToken + ":")
+      $token = [System.Text.Encoding]::UTF8.GetBytes({$env:SonarToken} + ":")
       $base64 = [System.Convert]::ToBase64String($token)
       Write-Host $token
       Write-Host $base64
