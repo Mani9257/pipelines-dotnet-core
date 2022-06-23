@@ -62,12 +62,12 @@ steps:
       
       if($sonarQualityGateResult.status -eq "SONARQUBE QUALITY GATE FAIL"){
       write-host "CI failed due to Sonarqube quality Gate"
-      errorActionPreference: 'stop'
+      #errorActionPreference: 'stop'
       }
       else
       {
         write-host "CI success"
-        errorActionPreference: 'continue'
+        #errorActionPreference: 'continue'
       }
     
 
@@ -93,12 +93,12 @@ steps:
       
       if ($result.projectStatus.status -eq "OK") {
       Write-Host "Quality Gate Succeeded"
-      errorActionPreference: 'continue'
+      #errorActionPreference: 'continue'
       }
       else
       {
         Write-Host "Quality Gate Fails"
-        errorActionPreference: 'stop'
+        #errorActionPreference: 'stop'
       }
     
     #errorActionPreference: 'continue'
