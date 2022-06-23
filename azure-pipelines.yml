@@ -54,7 +54,7 @@ steps:
       write-host "0"
       # Step 4. Make the GET request
       $responseData = Invoke-WebRequest -Uri http://35.170.71.8:9000/api/project_badges/quality_gate?project=java-project_java-project -Method Get -Headers $headers -UseBasicParsing
-      $x = $responseData.content | ConvertTo-Json | write-host
+      $x = $responseData.content | ConvertFrom-Json | write-host
       
       write-host $x.projectStatus.status
       write-host "1"
