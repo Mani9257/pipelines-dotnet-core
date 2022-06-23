@@ -57,7 +57,7 @@ steps:
       $x = $responseData.content | ConvertTo-Json 
       $sonarQualityGateResult = $x.projectStatus.status
       
-      if($sonarQualityGateResult -eq "ERROR"){
+      if($sonarQualityGateResult.status -eq "FAIL"){
       write-host "CI failed due to Sonarqube quality Gate"
       exit 1
       }
