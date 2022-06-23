@@ -50,11 +50,11 @@ steps:
       $headers = @{ Authorization = "Basic $encodedCredentials" }
       
       # Step 4. Make the GET request
-      $responseData = Invoke-WebRequest -Uri http://35.170.71.8:9000/api/project_badges/quality_gate?project=java-project_java-project -Method Get -Headers $headers #-UseBasicParsing
+      $responseData = Invoke-WebRequest -Uri http://35.170.71.8:9000/api/project_badges/quality_gate?project=java-project_java-project -Method Get -Headers $headers -UseBasicParsing
       
       write-host $responseData.content
       
-      $x = $responseData.content | ConvertTo-Json 
+      $x = $responseData.content | ConvertTo-Json | write-host
       $sonarQualityGateResult = $x.projectStatus.status
       
       if($sonarQualityGateResult.status -eq "FAIL"){
