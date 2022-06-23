@@ -56,7 +56,6 @@ steps:
       if($sonarQualityGateResult -eq "OK"){
       write-host "CI failed due to Sonarqube quality Gate"
       }
-    errorActionPreference: 'default'
 
 - task: PowerShell@2
   inputs:
