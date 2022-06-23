@@ -42,7 +42,7 @@ steps:
       $basicAuth = [string]::Format("Basic {0}", $base64)
       $headers = @{ Authorization = $basicAuth }
        
-      $result = "Invoke-RestMethod -Method Get -Uri \"http://35.170.71.8:9000/api/project_badges/measure?project=java-project_java-project&metric=alert_status"\ -Headers $headers"
+      $result = Invoke-RestMethod -Method Get -Uri http://35.170.71.8:9000/api/project_badges/quality_gate?project=java-project_java-project -Headers $headers
       $result | ConvertTo-Json | Write-Host
        
       if ($result.projectStatus.status -eq "OK") {
