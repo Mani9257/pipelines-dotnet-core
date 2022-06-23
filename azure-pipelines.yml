@@ -22,6 +22,9 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'java-project_java-project'
     projectName: 'java-project'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
 
 - task: SonarQubeAnalyze@5
 
