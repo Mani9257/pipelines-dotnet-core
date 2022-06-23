@@ -69,11 +69,13 @@ steps:
     script: |
       $token = [System.Text.Encoding]::UTF8.GetBytes(${env:SonarToken} + ":")
       $base64 = [System.Convert]::ToBase64String($token)
-       
+      Write-Host $token
       $basicAuth = [string]::Format("Basic {0}", $base64)
       $headers = @{ Authorization = $basicAuth }
-       
-      $result = Invoke-RestMethod -Method Get -Uri http://35.170.71.8:9000/dashboard?id=java-project_java-project -Headers $headers
+      Write-Host $headers
+      $result = Invoke-RestMethod -Method Get -Uri 'http://35.170.71.8:9000/dashboard?id=java-project_java-project -Headers' $headers
+      Write-Host $result
+
       $result | ConvertTo-Json | Write-Host
       Write-Host $result.projectStatus.status
       if($result.projectStatus.status -eq "OK"){
