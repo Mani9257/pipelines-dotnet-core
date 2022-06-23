@@ -37,30 +37,28 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
+      $credPair = "admin:Devops@2448"
       
-        $credPair = "admin:Devops@2448"
+      # Step 2. Encode the pair to Base64 string
+      $encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
       
-        # Step 2. Encode the pair to Base64 string
-        $encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
+      # Step 3. Form the header and add the Authorization attribute to it
+      $headers = @{ Authorization = "Basic $encodedCredentials" }
       
-        # Step 3. Form the header and add the Authorization attribute to it
-        $headers = @{ Authorization = "Basic $encodedCredentials" }
+      # Step 4. Make the GET request
+      $responseData = Invoke-WebRequest -Uri http://35.170.71.8:9000/api/project_badges/quality_gate?project=java-project_java-project -Method Get -Headers $headers -UseBasicParsing
       
-        # Step 4. Make the GET request
-        $responseData = Invoke-WebRequest -Uri http://35.170.71.8:9000/api/project_badges/quality_gate?project=java-project_java-project -Method Get -Headers $headers -UseBasicParsing
+      #write-host $responseData.content
       
-        #write-host $responseData.content
+      $x = $responseData.content | ConvertTo-Json
+      $sonarQualityGateResult = $x.projectStatus.status
       
-        $x = $responseData.content | ConvertTo-Json
-        $sonarQualityGateResult = $x.projectStatus.status
-      
-        if($sonarQualityGateResult -eq "ERROR")
-          {
-              write-host "CI failed due to Sonarqube quality Gate"
-              exit 1
-          }else{
-          throw "Quality gate passed"
-          }
+      if($sonarQualityGateResult -eq "ERROR")
+        {
+            write-host "CI failed due to Sonarqube quality Gate"
+        }else{
+        throw "Quality gate passed"
+        }
 
 - task: PowerShell@2
   inputs:
