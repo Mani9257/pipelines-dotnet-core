@@ -60,7 +60,7 @@ steps:
       write-host "1"
       $sonarQualityGateResult = $x.projectStatus.status
       
-      if($sonarQualityGateResult -contains 'SONARQUBE QUALITY GATE FAIL'){
+      if($x -contains 'SONARQUBE QUALITY GATE FAIL'){
       write-host "CI failed due to Sonarqube quality Gate"
       }
       else
