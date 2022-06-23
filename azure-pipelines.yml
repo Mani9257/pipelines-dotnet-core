@@ -53,7 +53,7 @@ steps:
       $x = $responseData.content | ConvertTo-Json | Write-Host
       $sonarQualityGateResult = $x.projectStatus.status
       
-      if($sonarQualityGateResult -eq "OK"){
+      if($x.projectStatus.status -eq "OK"){
       write-host "CI failed due to Sonarqube quality Gate"
       }
 
@@ -61,7 +61,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      $token = [System.Text.Encoding]::UTF8.GetBytes($env:SonarToken)
+      $token = [System.Text.Encoding]::UTF8.GetBytes($env:SonarToken + ":")
       $base64 = [System.Convert]::ToBase64String($token)
        
       $basicAuth = [string]::Format("Basic {0}", $base64)
