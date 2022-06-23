@@ -16,9 +16,9 @@ variables:
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
-- task: PowerShell@2
-  inputs:
-    filePath: '$(System.DefaultWorkingDirectory)\*\get-sonarqube-quality-gate-status.ps1'
+#- task: PowerShell@2
+ # inputs:
+  #  filePath: '$(System.DefaultWorkingDirectory)\*\get-sonarqube-quality-gate-status.ps1'
 
 - task: SonarQubePrepare@5
   inputs:
@@ -36,50 +36,50 @@ steps:
 - task: SonarQubePublish@5
   inputs:
     pollingTimeoutSec: '300'
-- task: PowerShell@2
-  displayName: QGcheck-with-UP
-  inputs:
-    targetType: 'inline'
-    script: |
-      $credPair = "admin:Devops@2448"
+#- task: PowerShell@2
+  #displayName: QGcheck-with-UP
+  #inputs:
+    #targetType: 'inline'
+    #script: |
+      #$credPair = "admin:Devops@2448"
       
       # Step 2. Encode the pair to Base64 string
-      $encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
+      #$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
       
       # Step 3. Form the header and add the Authorization attribute to it
-      $headers = @{ Authorization = "Basic $encodedCredentials" }
+      #$headers = @{ Authorization = "Basic $encodedCredentials" }
       
       # Step 4. Make the GET request
-      $responseData = Invoke-WebRequest -Uri http://35.170.71.8:9000/api/qualitygates/project_status?projectKey=java-project_java-project -Method Get -Headers $headers #-UseBasicParsing
+      #$responseData = Invoke-WebRequest -Uri http://35.170.71.8:9000/api/qualitygates/project_status?projectKey=java-project_java-project -Method Get -Headers $headers #-UseBasicParsing
       
       #write-host $responseData.content
       
-      $x = $responseData.content | ConvertTo-Json | Write-Host
-      $sonarQualityGateResult = $x.projectStatus.status
+      #$x = $responseData.content | ConvertTo-Json | Write-Host
+      #$sonarQualityGateResult = $x.projectStatus.status
       
-      if($x.projectStatus.status -eq "OK"){
-      write-host "CI failed due to Sonarqube quality Gate"
-      }
+      #if($x.projectStatus.status -eq "OK"){
+      #write-host "CI failed due to Sonarqube quality Gate"
+      #}
 
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      $token = [System.Text.Encoding]::UTF8.GetBytes($env:SonarToken + ":")
-      $base64 = [System.Convert]::ToBase64String($token)
+#- task: PowerShell@2
+  #inputs:
+    #targetType: 'inline'
+    #script: |
+      #$token = [System.Text.Encoding]::UTF8.GetBytes($env:SonarToken + ":")
+      #$base64 = [System.Convert]::ToBase64String($token)
        
-      $basicAuth = [string]::Format("Basic {0}", $base64)
-      $headers = @{ Authorization = $basicAuth }
+      #$basicAuth = [string]::Format("Basic {0}", $base64)
+      #$headers = @{ Authorization = $basicAuth }
        
-      $result = Invoke-RestMethod -Method Get -Uri http://35.170.71.8:9000/api/qualitygates/project_status?projectKey=java-project_java-project -Headers $headers
-      $result | ConvertTo-Json | Write-Host
+      #$result = Invoke-RestMethod -Method Get -Uri http://35.170.71.8:9000/api/qualitygates/project_status?projectKey=java-project_java-project -Headers $headers
+      #$result | ConvertTo-Json | Write-Host
        
-      if ($result.projectStatus.status -eq "OK") {
-      Write-Host "Quality Gate Succeeded"
-      }else{
-      throw "Quality gate failed"
-      }
-    errorActionPreference: 'continue'
+      #if ($result.projectStatus.status -eq "OK") {
+      #Write-Host "Quality Gate Succeeded"
+      #}else{
+      #throw "Quality gate failed"
+      #}
+    #errorActionPreference: 'continue'
 
 - task: PowerShell@2
   inputs:
