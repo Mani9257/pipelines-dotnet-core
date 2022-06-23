@@ -76,11 +76,12 @@ steps:
       $result = Invoke-RestMethod -Method Get -Uri http://35.170.71.8:9000/dashboard?id=java-project_java-project -Headers $headers
       $result | ConvertTo-Json | Write-Host
        
-      if ($result.projectStatus.status -eq "OK") {
+      if($result.projectStatus.status -eq "OK"){
       Write-Host "Quality Gate Succeeded"
       }else{
       throw "Quality gate failed"
       }
+    errorActionPreference: 'default'
     #errorActionPreference: 'continue'
 
 - task: PowerShell@2
