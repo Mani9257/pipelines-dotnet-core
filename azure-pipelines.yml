@@ -50,10 +50,10 @@ steps:
       
       #write-host $responseData.content
       
-      $x = $responseData.content | ConvertTo-Json
+      $x = $responseData.content | ConvertTo-Json | Write-Host
       $sonarQualityGateResult = $x.projectStatus.status
       
-      if($sonarQualityGateResult -eq "Passed"){
+      if($sonarQualityGateResult -eq "OK"){
       write-host "CI failed due to Sonarqube quality Gate"
       }
 
