@@ -70,10 +70,10 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      $token = [System.Text.Encoding]::UTF8.GetBytes({$env:SonarToken} + ":")
-      Write-Output "ENV Value :  "+ $token
-      $token1 = [System.Text.Encoding]::UTF8.GetBytes({$SonarToken} + ":")
-      Write-Output "ENV Value :  "+ $token1
+      $token = [System.Text.Encoding]::UTF8.GetBytes($env:SonarToken + ":")
+      Write-Output "ENV Token value:  "+ $token
+      $token1 = [System.Text.Encoding]::UTF8.GetBytes($SonarToken + ":")
+      Write-Output "with out ENV Token Value :  "+ $token1
 
       $base64 = [System.Convert]::ToBase64String($token)
       Write-Host $token
