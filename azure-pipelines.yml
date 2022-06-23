@@ -46,7 +46,7 @@ steps:
       $headers = @{ Authorization = "Basic $encodedCredentials" }
       
       # Step 4. Make the GET request
-      $responseData = Invoke-WebRequest -Uri http://35.170.71.8:9000/api/project_badges/quality_gate?project=java-project_java-project -Method Get -Headers $headers -UseBasicParsing
+      $responseData = Invoke-WebRequest -Uri http://35.170.71.8:9000/api/project_badges/quality_gate?project=java-project_java-project -Method Get -Headers $headers #-UseBasicParsing
       
       #write-host $responseData.content
       
@@ -67,7 +67,7 @@ steps:
       $basicAuth = [string]::Format("Basic {0}", $base64)
       $headers = @{ Authorization = $basicAuth }
        
-      $result = Invoke-RestMethod -Method Get -Uri http://35.170.71.8:9000/api/project_badges/quality_gate?project=java-project_java-project -Headers $headers
+      $result = Invoke-RestMethod -Method Get -Uri http://35.170.71.8:9000/dashboard?id=java-project_java-project -Headers $headers
       $result | ConvertTo-Json | Write-Host
        
       if ($result.projectStatus.status -eq "OK") {
