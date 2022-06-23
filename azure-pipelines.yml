@@ -42,10 +42,31 @@ steps:
       $basicAuth = [string]::Format("Basic {0}", $base64)
       $headers = @{ Authorization = $basicAuth }
        
-      $result = Invoke-RestMethod -Method Get -Uri http://35.170.71.8:9000/dashboard?id=java-project_java-project -Headers $headers
+      $result = Invoke-RestMethod -Method Get -Uri http://35.170.71.8:9000/api/project_badges/measure?project=java-project_java-project&metric=alert_status -Headers $headers
       $result | ConvertTo-Json | Write-Host
        
       if ($result.projectStatus.status -eq "OK") {
+      Write-Host "Quality Gate Succeeded"
+      }else{
+      throw "Quality gate failed"
+      }
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      $branch = "$(Build.SourceBranch)"
+      $branch = $branch -replace 'refs\/heads\/',''
+                
+      cmd.exe /c  $env:CMDPATH $env:REPO $branch
+               
+      Write-Host "first"
+      $branch = $branch -replace '\/','-'
+      Write-Host $branch
+      $json=Get-Content $env:JSONPATH\$branch.json | ConvertFrom-Json
+      Write-Host "second"
+      Write-Host $json.projectStatus.status
+      if ($json.projectStatus.status -eq "OK") {
       Write-Host "Quality Gate Succeeded"
       }else{
       throw "Quality gate failed"
