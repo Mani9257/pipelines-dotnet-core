@@ -62,8 +62,14 @@ steps:
       
       if($sonarQualityGateResult.status -eq "SONARQUBE QUALITY GATE FAIL"){
       write-host "CI failed due to Sonarqube quality Gate"
+      errorActionPreference: 'stop'
       }
-    errorActionPreference: 'default'
+      else
+      {
+        write-host "CI success"
+        errorActionPreference: 'continue'
+      }
+    
 
 
 - task: PowerShell@2
@@ -82,15 +88,19 @@ steps:
       $headers = @{ Authorization = $basicAuth }
       Write-Host $headers
       $result = Invoke-RestMethod -Method Get -Uri http://35.170.71.8:9000/dashboard?id=java-project_java-project -Headers $headers -UseBasicParsing
-     
-      Write-Host $result
-
       $result | ConvertTo-Json | Write-Host
-      Write-Host $result.projectStatus.status
+
+      
       if ($result.projectStatus.status -eq "OK") {
       Write-Host "Quality Gate Succeeded"
+      errorActionPreference: 'continue'
       }
-    errorActionPreference: 'default'
+      else
+      {
+        Write-Host "Quality Gate Fails"
+        errorActionPreference: 'stop'
+      }
+    
     #errorActionPreference: 'continue'
 
 - task: PowerShell@2
