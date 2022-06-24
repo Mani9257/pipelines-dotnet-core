@@ -57,9 +57,11 @@ steps:
       Write-Host $headers
       # Step 4. Make the GET request
       $responseData = Invoke-WebRequest -Uri http://35.170.71.8:9000/api/project_badges/quality_gate?project=java-project_java-project -Method Get -Headers $headers -UseBasicParsing
+      Write-Host "display responseData"
+      Write-Host $responseData
       $x = $responseData.content | ConvertTo-Json | ConvertFrom-Json | write-host 
       Write-Host "Display $X contains"
-      Write-Host $x
+      Write-Host $x.content
       if($x -contains '<-- SONARQUBE QUALITY GATE FAIL -->'){
       write-host "CI failed due to Sonarqube quality Gate"
       }
