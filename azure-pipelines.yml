@@ -18,7 +18,7 @@ steps:
   displayName: 'dotnet build $(buildConfiguration)'
 - task: SonarQubePrepare@5
   inputs:
-    SonarQube: 'SonarQube'
+    SonarQube: 'Sonar123'
     scannerMode: 'MSBuild'
     projectKey: 'java-project_java-project'
     projectName: 'java-project'
