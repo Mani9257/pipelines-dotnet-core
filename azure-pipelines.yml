@@ -28,8 +28,7 @@ steps:
       # Additional properties that will be passed to the scanner, 
       # Put one key=value per line, example:
       # sonar.exclusions=**/*.bin
-      #sonar.qualitygate.wait=true
-      #sonar.qualitygate.timeout=300
+      
       
 - task: DotNetCoreCLI@2
   inputs:
