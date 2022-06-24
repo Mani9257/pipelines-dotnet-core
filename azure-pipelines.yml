@@ -24,11 +24,7 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'java-project_java-project'
     projectName: 'java-project'
-    extraProperties: |
-      # Additional properties that will be passed to the scanner, 
-      # Put one key=value per line, example:
-      # sonar.exclusions=**/*.bin
-      
+    
       
 - task: DotNetCoreCLI@2
   inputs:
