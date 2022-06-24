@@ -52,7 +52,7 @@ steps:
       $responseData = Invoke-WebRequest -Uri http://44.200.162.24:9000/api/project_badges/quality_gate?project=java-project_java-project -Method Get -Headers $headers -UseBasicParsing
       Write-Host "display responseData"
       Write-Host $responseData.content
-      $x = $responseData.content | ConvertFrom-Json | Out-String | write-host 
+      $x = $responseData.content | Out-StringConvertFrom-Json | ConvertFrom-Json | write-host 
       Write-Host "Display $X contains"
       Write-Host $x.content
       $sonarQualityGateResult = $x.projectStatus.status
